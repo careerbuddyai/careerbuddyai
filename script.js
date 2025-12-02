@@ -1,23 +1,13 @@
-document.getElementById("generateBtn").onclick = async function () {
-  const jd = document.getElementById("jd").value.trim();
-  const resume = document.getElementById("resume").value.trim();
+document.getElementById("generateBtn").onclick = async () => {
+  const jd = document.getElementById("jd").value;
+  const resume = document.getElementById("resume").value;
 
-  if (!jd || !resume) {
-    alert("Please paste both job description and resume.");
-    return;
-  }
+  const res = await fetch("/.netlify/functions/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jd, resume })
+  });
 
-  try {
-    const response = await fetch("/.netlify/functions/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jd, resume })
-    });
-
-    const result = await response.text();
-    document.getElementById("output").innerText = result;
-
-  } catch (err) {
-    document.getElementById("output").innerText = "Error: " + err.message;
-  }
+  const data = await res.json();
+  document.getElementById("output").innerText = data.questions || data.error;
 };
