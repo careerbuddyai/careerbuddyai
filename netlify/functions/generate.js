@@ -4,38 +4,44 @@ export async function handler(event) {
   try {
     const { jd, resume } = JSON.parse(event.body);
 
+    const payload = {
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "user",
+          content:
+            `Job Description:\n${jd}\n\nResume:\n${resume}\n\nGenerate 10 relevant interview questions.`
+        }
+      ]
+    };
+
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer " + process.env.OPENAI_API_KEY,
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "user",
-            content: `Job Description: ${jd}\nResume: ${resume}\nGenerate 10 interview questions only.`
-          }
-        ]
-      })
+      body: JSON.stringify(payload)
     });
 
     const data = await response.json();
 
-    if (!data.choices || !data.choices[0]) {
+    // Log API error if any
+    if (data.error) {
+      console.error("OpenAI Error:", data.error);
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: "OpenAI API Error", details: data })
+        body: JSON.stringify({ error: data.error.message })
       };
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ questions: data.choices[0].message.content })
+      body: data.choices[0].message.content
     };
-  }
-  catch (err) {
+
+  } catch (err) {
+    console.error("Function crashed:", err);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message })
