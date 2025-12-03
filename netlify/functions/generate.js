@@ -1,14 +1,13 @@
 import fetch from "node-fetch";
 
-export async function handler(event, context) {
+export async function handler(event) {
   try {
-    const body = JSON.parse(event.body || "{}");
-    const { jd, resume } = body;
+    const { jd, resume } = JSON.parse(event.body || "{}");
 
     if (!jd || !resume) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: "Missing JD or Resume" })
+        body: "Missing JD or Resume input"
       };
     }
 
@@ -16,41 +15,37 @@ export async function handler(event, context) {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + process.env.OPENAI_API_KEY,
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
           {
             role: "user",
-            content: `
-            JD: ${jd}
-            Resume: ${resume}
-            Generate 10 interview questions only.
-            `,
-          },
-        ],
-      }),
+            content: `Job Description:\n${jd}\n\nResume:\n${resume}\n\nGenerate 10 interview questions:`
+          }
+        ]
+      })
     });
 
     const data = await response.json();
 
-    if (!data.choices || !data.choices[0]) {
+    if (!data.choices) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: "OpenAI response error", data }),
+        body: JSON.stringify(data)
       };
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ result: data.choices[0].message.content }),
+      body: data.choices[0].message.content
     };
 
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
+      body: "Server Error: " + err.message
     };
   }
 }

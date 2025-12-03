@@ -1,27 +1,23 @@
-async function generateQuestions() {
+async function generate() {
   const jd = document.getElementById("jd").value;
   const resume = document.getElementById("resume").value;
+  const output = document.getElementById("output");
 
-  const resultBox = document.getElementById("result");
-  resultBox.textContent = "Generating...";
+  output.textContent = "Generating questions...";
 
   try {
     const response = await fetch("/.netlify/functions/generate", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jd, resume }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ jd, resume })
     });
 
-    const data = await response.json();
+    const text = await response.text();
+    output.textContent = text;
 
-    if (data.error) {
-      resultBox.textContent = "Error: " + data.error;
-      return;
-    }
-
-    resultBox.textContent = data.result;
-
-  } catch (e) {
-    resultBox.textContent = "Failed: " + e.message;
+  } catch (err) {
+    output.textContent = "Error: " + err.message;
   }
 }
