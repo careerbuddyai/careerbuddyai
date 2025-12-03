@@ -1,82 +1,75 @@
 body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #f3f5f7;
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
   margin: 0;
-  padding: 0;
+}
+
+.header {
+  text-align: center;
+  padding: 20px;
+  background: #0057d8;
+  color: white;
 }
 
 .container {
-  width: 60%;
-  margin: 40px auto;
-  padding: 30px;
+  width: 70%;
+  margin: 25px auto;
   background: white;
+  padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 0 12px rgba(0,0,0,0.15);
 }
 
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  font-size: 32px;
-}
-
-.subtitle {
-  text-align: center;
-  color: #555;
-  margin-bottom: 25px;
-}
-
-.input-box {
+textarea {
   width: 100%;
-  height: 150px;
-  padding: 12px;
-  margin-bottom: 20px;
+  height: 140px;
+  margin-top: 10px;
+  padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 14px;
+  resize: vertical;
 }
 
-.btn {
-  display: block;
-  margin: 0 auto 20px auto;
+.upload-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.upload-section div {
+  width: 50%;
+}
+
+.generate-btn {
+  margin-top: 20px;
   padding: 12px 25px;
-  background: #007bff;
-  border: none;
+  background: #0057d8;
   color: white;
-  font-size: 16px;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.btn:hover {
-  background: #005fcc;
+.generate-btn:hover {
+  background: #0044a8;
 }
 
 .output-box {
-  background: #f8f8f8;
-  border: 1px solid #ddd;
-  padding: 15px;
-  height: 300px;
-  overflow-y: scroll;
+  background: #f7f7f7;
   border-radius: 8px;
+  height: 300px;
+  margin-top: 20px;
+  padding: 15px;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
   white-space: pre-wrap;
+  font-size: 15px;
 }
-
-.ad-left,
-.ad-right {
-  position: fixed;
-  top: 0;
-  width: 120px;
-  height: 100%;
-  background: transparent; 
-}
-
-.ad-left { left: 0; }
-.ad-right { right: 0; }
 
 footer {
   text-align: center;
   padding: 20px;
-  color: #666;
-  font-size: 14px;
+  margin-top: 40px;
+  background: #222;
+  color: white;
 }

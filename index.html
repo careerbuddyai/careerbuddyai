@@ -4,28 +4,44 @@
   <title>CareerBuddy AI</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-  <div class="ad-left"></div>
-  <div class="ad-right"></div>
+<body>
+  <div class="header">
+    <h1>CareerBuddy AI</h1>
+    <p>Your smart assistant for interview preparation</p>
+  </div>
 
   <div class="container">
-    <h1>CareerBuddy AI</h1>
-    <p class="subtitle">Your personal Interview Question Generator</p>
+    
+    <h2>Upload JD / Resume (PDF, Image) or paste text</h2>
 
-    <textarea id="jd" class="input-box" placeholder="Paste Job Description here"></textarea>
-    <textarea id="resume" class="input-box" placeholder="Paste Resume here"></textarea>
+    <div class="upload-section">
+      <div>
+        <label>Job Description</label>
+        <textarea id="jd" placeholder="Paste JD here..."></textarea>
 
-    <button onclick="generate()" class="btn">Generate Questions</button>
+        <input type="file" id="jdFile" accept=".pdf,.png,.jpg,.jpeg" />
+        <button onclick="loadFile('jdFile','jd')">Upload & Extract</button>
+      </div>
 
-    <h3>Generated Questions:</h3>
+      <div>
+        <label>Resume</label>
+        <textarea id="resume" placeholder="Paste Resume here..."></textarea>
 
-    <pre id="output" class="output-box"></pre>
+        <input type="file" id="resumeFile" accept=".pdf,.png,.jpg,.jpeg" />
+        <button onclick="loadFile('resumeFile','resume')">Upload & Extract</button>
+      </div>
+    </div>
+
+    <button class="generate-btn" onclick="generate()">Generate Questions</button>
+
+    <h3>Generated Questions</h3>
+    <div id="output" class="output-box">Nothing yet...</div>
+
   </div>
 
   <footer>
-    <p>⚡ AI Powered by GPT-4o Mini | 🔒 Safe & Secure</p>
-    <p>📧 Contact: careerbuddy.ai@gmail.com</p>
+    <p>Powered by AI • Safe & Secure • © CareerBuddy AI</p>
   </footer>
 
   <script src="script.js"></script>
