@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export async function handler(event) {
   try {
     const { jd, resume } = JSON.parse(event.body || "{}");
@@ -7,7 +5,7 @@ export async function handler(event) {
     if (!jd || !resume) {
       return {
         statusCode: 400,
-        body: "Missing JD or Resume input"
+        body: "JD or Resume missing"
       };
     }
 
@@ -22,7 +20,8 @@ export async function handler(event) {
         messages: [
           {
             role: "user",
-            content: `Job Description:\n${jd}\n\nResume:\n${resume}\n\nGenerate 10 interview questions:`
+            content:
+              `Job Description:\n${jd}\n\nResume:\n${resume}\n\nGenerate 10 interview questions.`
           }
         ]
       })
@@ -30,22 +29,15 @@ export async function handler(event) {
 
     const data = await response.json();
 
-    if (!data.choices) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify(data)
-      };
-    }
-
     return {
       statusCode: 200,
-      body: data.choices[0].message.content
+      body: JSON.stringify({ result: data.choices?.[0]?.message?.content || "" })
     };
 
   } catch (err) {
     return {
       statusCode: 500,
-      body: "Server Error: " + err.message
+      body: "Error: " + err.toString()
     };
   }
 }
