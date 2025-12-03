@@ -3,15 +3,27 @@ async function generate() {
   const resume = document.getElementById("resume").value.trim();
   const output = document.getElementById("output");
 
+  if (!jd || !resume) {
+    output.textContent = "Please enter both JD and Resume.";
+    return;
+  }
+
   output.textContent = "Generating... Please wait.";
 
-  const response = await fetch("/.netlify/functions/generate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ jd, resume })
-  });
+  try {
+    const response = await fetch("/.netlify/functions/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ jd, resume }),
+    });
 
-  const data = await response.json();
+    const text = await response.text();  // Read raw text, not JSON
 
-  output.textContent = data.result || "No output received.";
+    // 🔥 Debug: show raw response in console
+    console.log("RAW RESPONSE:", text);
+
+    output.textContent = text;
+  } catch (err) {
+    output.textContent = "Error: " + err.message;
+  }
 }
