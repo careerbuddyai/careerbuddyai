@@ -5,18 +5,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <div class="ad-left"></div>
+  <div class="ad-right"></div>
+
   <div class="container">
     <h1>CareerBuddy AI</h1>
-    <p>Generate Interview Questions from JD & Resume</p>
+    <p class="subtitle">Your personal Interview Question Generator</p>
 
-    <textarea id="jd" placeholder="Paste Job Description here"></textarea>
-    <textarea id="resume" placeholder="Paste Resume here"></textarea>
+    <textarea id="jd" class="input-box" placeholder="Paste Job Description here"></textarea>
+    <textarea id="resume" class="input-box" placeholder="Paste Resume here"></textarea>
 
-    <button onclick="generate()">Generate Questions</button>
+    <button onclick="generate()" class="btn">Generate Questions</button>
 
     <h3>Generated Questions:</h3>
-    <pre id="output"></pre>
+
+    <pre id="output" class="output-box"></pre>
   </div>
+
+  <footer>
+    <p>⚡ AI Powered by GPT-4o Mini | 🔒 Safe & Secure</p>
+    <p>📧 Contact: careerbuddy.ai@gmail.com</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
